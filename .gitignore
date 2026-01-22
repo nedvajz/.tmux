@@ -1,0 +1,3 @@
+# TPM downloads plugins here, keep only tpm submodule
+plugins/*
+!plugins/tpm
