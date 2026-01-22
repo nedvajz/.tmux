@@ -29,13 +29,13 @@ PANE RESIZE
   C-s L          resize right
 
 WINDOWS
-  C-s c          new window
-  C-s Ctrl+h     previous window
-  C-s Ctrl+l     next window
+  C-s ,          new window
+  C-s Ctrl+k     previous window
+  C-s Ctrl+j     next window
   C-s Tab        last window
 
-SESSIONS
-  F2             session list (x=kill)
+SESSIONS & WINDOWS
+  F2             tree view (x=kill)
   C-s :new -s X  new session named X
   C-s $          rename session
 
