@@ -1,0 +1,45 @@
+# ~/.tmux-help
+
+TMUX KEYMAP
+===========
+
+Leader: Ctrl+s
+
+HELP
+  F1             show this help (q to close)
+
+SPLITS (vim commands)
+  C-s :sp        horizontal split
+  C-s :vs        vertical split
+  C-s :q         close pane
+  C-s :qa        close window
+  C-s :w         detach
+
+PANE NAVIGATION
+  C-s h          move left
+  C-s j          move down
+  C-s k          move up
+  C-s l          move right
+  C-s w          cycle panes
+
+PANE RESIZE
+  C-s H          resize left
+  C-s J          resize down
+  C-s K          resize up
+  C-s L          resize right
+
+WINDOWS
+  C-s c          new window
+  C-s Ctrl+h     previous window
+  C-s Ctrl+l     next window
+  C-s Tab        last window
+
+SESSIONS
+  F2             session list (x=kill)
+  C-s :new -s X  new session named X
+  C-s $          rename session
+
+OTHER
+  C-s z          zoom pane (toggle)
+  C-s r          reload config
+  C-s Escape     copy mode (v=select, y=yank, p=paste)
