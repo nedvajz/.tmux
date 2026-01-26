@@ -30,9 +30,10 @@ PANE RESIZE
 
 WINDOWS
   C-s ,          new window
-  C-s Ctrl+k     previous window
-  C-s Ctrl+j     next window
+  C-s [          previous window
+  C-s ]          next window
   C-s Tab        last window
+  C-s .          rename window
 
 SESSIONS & WINDOWS
   F2             tree view (x=kill)
@@ -48,3 +49,6 @@ OTHER
   C-s z          zoom pane (toggle)
   C-s r          reload config
   C-s Escape     copy mode (v=select, y=yank, p=paste)
+
+TERMINAL FEATURES
+  Extended keys enabled (Shift+Enter, Ctrl+Shift+X, etc.)
