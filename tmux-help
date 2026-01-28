@@ -48,7 +48,8 @@ SESSION PERSISTENCE (survives restart)
 OTHER
   C-s z          zoom pane (toggle)
   C-s r          reload config
-  C-s Escape     copy mode (v=select, y=yank, p=paste)
+  C-s v          copy mode (v=select, y=yank, q=quit)
+  C-s p          paste
 
 TERMINAL FEATURES
   Extended keys enabled (Shift+Enter, Ctrl+Shift+X, etc.)
