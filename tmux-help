@@ -40,10 +40,15 @@ SESSIONS & WINDOWS
   C-s :new -s X  new session named X
   C-s $          rename session
 
+CLAUDE SESSIONS
+  F3             jump to / resume a running Claude session (fzf)
+               windows running Claude show a status icon:
+               ⏳ needs input  ⚙️ working  ✅ idle  ❌ error
+
 SESSION PERSISTENCE (survives restart)
   C-s Ctrl+s     save session
   C-s Ctrl+r     restore session
-               (auto-saves every 5min, auto-restores on start)
+               (auto-saves every 1min, restore on shell start via .zshrc)
 
 OTHER
   C-s z          zoom pane (toggle)
