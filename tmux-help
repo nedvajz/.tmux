@@ -11,6 +11,8 @@ HELP
 SPLITS (vim commands)
   C-s :sp        horizontal split
   C-s :vs        vertical split
+  C-s "          horizontal split (inherits path)
+  C-s %          vertical split (inherits path)
   C-s :q         close pane
   C-s :qa        close window
   C-s :w         detach
@@ -29,21 +31,27 @@ PANE RESIZE
   C-s L          resize right
 
 WINDOWS
-  C-s ,          new window
+  C-s .          new window (inherits path)
+  C-s c          new window (inherits path)
   C-s [          previous window
   C-s ]          next window
   C-s Tab        last window
-  C-s .          rename window
+  C-s ,          rename window
 
 SESSIONS & WINDOWS
   F2             tree view (x=kill)
   C-s :new -s X  new session named X
   C-s $          rename session
 
+CLAUDE SESSIONS
+  F3             jump to / resume a running Claude session (fzf)
+               windows running Claude show a status icon:
+               ⏳ needs input  ⚙️ working  ✅ idle  ❌ error
+
 SESSION PERSISTENCE (survives restart)
   C-s Ctrl+s     save session
   C-s Ctrl+r     restore session
-               (auto-saves every 5min, auto-restores on start)
+               (auto-saves every 1min, restore on shell start via .zshrc)
 
 OTHER
   C-s z          zoom pane (toggle)
