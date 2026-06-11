@@ -48,8 +48,8 @@ CLAUDE SESSIONS
                focuses its Ghostty window even across macOS Spaces
                windows running Claude show a status icon:
                ⏳ needs input  ⚙️ working  ✅ idle  ❌ error
-               a pulsing ⏳ by the clock = some session needs input;
-               open F3 to deal with it
+               by the clock: static ⚙️ = a session is working,
+               pulsing ⏳ = a session needs input (open F3 to deal with it)
 
 SESSION PERSISTENCE (survives restart)
   C-s Ctrl+s     save session
