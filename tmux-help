@@ -46,6 +46,7 @@ SESSIONS & WINDOWS
 CLAUDE SESSIONS
   F3             jump to / resume a running Claude session (fzf);
                focuses its Ghostty window even across macOS Spaces
+               double-F3 = jump straight to the top (most urgent) one
                windows running Claude show a status icon:
                ⏳ needs input  ⚙️ working  ✅ idle  ❌ error
                by the clock: static ⚙️ = a session is working,
