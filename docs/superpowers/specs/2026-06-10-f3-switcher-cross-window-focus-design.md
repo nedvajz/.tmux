@@ -33,8 +33,8 @@ set -g set-titles-string '#S — tmux'
 ```
 
 Každé Ghostty okno dostane do titulku jméno session, kterou jeho klient
-zobrazuje — podle toho AppleScript okno najde. Vedlejší efekt: titulky
-Ghostty oken řídí tmux.
+zobrazuje — podle toho Ghostty scripting okno najde (`window whose name
+is "<session> — tmux"`). Vedlejší efekt: titulky Ghostty oken řídí tmux.
 
 ### Switcher — rozhodovací logika akce `pane`
 
@@ -44,38 +44,40 @@ z velikosti okna).
 | Stav cílové session | Akce |
 |---|---|
 | = session aktuálního klienta | `select-window` + `select-pane` |
-| attachnutá jiným klientem | `select-window` + `select-pane` v cílové session, pak AppleScript focus Ghostty okna s titulkem `<session> — tmux`; aktuální klient beze změny |
+| attachnutá jiným klientem | `select-window` + `select-pane` v cílové session, pak Ghostty `activate window` toho okna; aktuální klient beze změny |
 | neattachnutá | `switch-client` (dnešní chování) |
 
 Akce `new` beze změny.
 
-### AppleScript focus
+### Ghostty focus (ověřeno de-riskem)
 
 ```applescript
-tell application "System Events" to tell process "Ghostty"
-    perform action "AXRaise" of (first window whose title starts with "<session> — tmux")
-    set frontmost to true
-end tell
+tell application "Ghostty" to activate window ¬
+  (first window whose name is "<session> — tmux")
 ```
 
-macOS přepne na Space okna sám (výchozí chování „switch to a Space with
-open windows"). Vyžaduje jednorázové povolení Accessibility pro Ghostty.
+Ghostty zná všechna svá okna napříč Spaces (na rozdíl od System Events /
+AX API, které vidí jen okna na aktuální Space) a `activate window` reálně
+přepne i na cílovou Space — ověřeno ručním testem na 3 workspaces.
+
+**Žádná Accessibility / Automation permission není potřeba:** switcher
+běží uvnitř Ghostty (přes tmux), takže `tell application "Ghostty"` je
+self-automation bez systémového dialogu.
 
 ### Chybové stavy
 
-- Okno s titulkem nenalezeno (titulek ještě nepřekreslen, zavřené okno)
-  → `tmux display-message` s hintem, žádný pád.
-- Accessibility nepovoleno → osascript selže → stejný fallback na hint.
+- Okno s daným jménem nenalezeno (titulek ještě nepřekreslen, zavřené
+  okno) → `tmux display-message` s hintem, žádný pád.
+- osascript selže z jiného důvodu → stejný fallback na hint.
 
-## Pořadí implementace — de-risk first
+## Pořadí implementace
 
-1. **Ruční test AXRaise** přes 3 workspaces jedním osascript příkazem,
-   ještě před psaním kódu. Pokud nefunguje spolehlivě, focus krok se
-   nahradí hintem (`display-message "session běží v okně X"`); zbytek
-   logiky zůstává stejný.
-2. tmux.conf + reload.
-3. Úprava switcheru.
-4. Ruční ověření všech tří scénářů.
+De-risk (klíčový test `activate window` přes 3 workspaces) **hotový a
+úspěšný** — focus přes Ghostty scripting funguje včetně přeskoku Space.
+
+1. tmux.conf: `set-titles on` + `set-titles-string` + reload.
+2. Úprava switcheru (rozhodovací logika + Ghostty focus helper).
+3. Ruční ověření všech tří scénářů.
 
 ## Mimo rozsah
 
