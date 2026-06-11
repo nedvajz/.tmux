@@ -49,20 +49,41 @@ z velikosti okna).
 
 Akce `new` beze změny.
 
+### Párování okna — nezávislé na formátu titulku
+
+Switcher žije ve sdíleném `~/.claude/scripts/`, ale `.tmux` conf je u
+každého vývojáře jiný (různý `set-titles-string`). Switcher proto **nesmí**
+mít formát titulku zadrátovaný. Místo toho si očekávaný titulek vyrobí
+z tmuxu:
+
+```bash
+fmt="$(tmux show-options -gv set-titles-string)"
+title="$(tmux display-message -p -t "<session>:" "$fmt")"
+```
+
+`display-message` expanduje formát v kontextu aktivního pane cílové
+session — tedy přesně to, co Ghostty okno zobrazuje. Funguje pro libovolný
+formát (`#S`, `#S — tmux`, `#S:#W`, …). Ověřeno: pro všechny session
+reprodukuje skutečný název okna.
+
+Pozn. pořadí: titulek se expanduje **až po** `select-window`, protože
+formát může obsahovat `#W`/`#T` a přepnutí window titulek mění.
+
 ### Ghostty focus (ověřeno de-riskem)
 
 ```applescript
 tell application "Ghostty" to activate window ¬
-  (first window whose name is "<session> — tmux")
+  (first window whose name is "<title>")
 ```
 
 Ghostty zná všechna svá okna napříč Spaces (na rozdíl od System Events /
 AX API, které vidí jen okna na aktuální Space) a `activate window` reálně
-přepne i na cílovou Space — ověřeno ručním testem na 3 workspaces.
+přepne i na cílovou Space — ověřeno ručním testem na 3 workspaces,
+**i s vypnutým Accessibility** (System Events přitom selhal `-1719`).
 
 **Žádná Accessibility / Automation permission není potřeba:** switcher
 běží uvnitř Ghostty (přes tmux), takže `tell application "Ghostty"` je
-self-automation bez systémového dialogu.
+self-automation bez systémového dialogu. Empiricky potvrzeno.
 
 ### Chybové stavy
 
@@ -79,7 +100,16 @@ De-risk (klíčový test `activate window` přes 3 workspaces) **hotový a
 2. Úprava switcheru (rozhodovací logika + Ghostty focus helper).
 3. Ruční ověření všech tří scénářů.
 
+## Umístění switcheru
+
+Skript zůstává v `~/.claude/scripts/tmux-claude-switcher.sh` (sdílený mezi
+dvěma vývojáři se společným `~/.claude`). Není verzovaný v tomto repu;
+case-block s rozhodovací logikou se edituje přímo tam. `tmux.conf` na něj
+už odkazuje přes `~`. Proto je párování okna nezávislé na formátu titulku
+(viz výše) — druhý vývojář má jiný `set-titles-string`.
+
 ## Mimo rozsah
 
 - Window managery (Moom, yabai…) — čistý macOS přístup.
 - Akce `new` a řazení/ikony ve fzf seznamu.
+- Verzování switcheru v `.tmux` (případně později).
