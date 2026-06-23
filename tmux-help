@@ -33,6 +33,10 @@ PANE RESIZE
 WINDOWS
   C-s .          new window (inherits path)
   C-s c          new window (inherits path)
+  C-s n          new window from ticket: prompts "ticket: ", then opens
+               claude (left, named session) + shell (right, project dir);
+               "em3-26 auth" -> window & claude session named "em3-26-auth"
+               (shell: `tt em3-26 auth` does the same from the terminal)
   C-s [          previous window
   C-s ]          next window
   C-s Tab        last window
